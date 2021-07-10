@@ -16,8 +16,3 @@ RUN cargo install wasm-pack --version 0.9.1 --no-default-features
 COPY ./util/build_dependencies_only.sh ./build_dependencies_only.sh
 COPY ./LICENSE.txt ./LICENSE.txt
 
-#TODO @mark: TEMPORARY! REMOVE THIS!
-COPY ./Cargo.toml ./Cargo.toml
-RUN sh build_dependencies_only.sh
-
-
