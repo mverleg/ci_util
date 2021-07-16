@@ -17,7 +17,7 @@ grep -E '^(build|path)\s*=\s*"([^"]*)"' Cargo.toml |
         printf "\n// generated file to build dependencies\n#[allow(unused)]\nfn main() {}\n" > "$";
         touch -t "200001010100" "$";'
 
-cargo build --workspace "$1"
+cargo build --workspace "$@"
 
 grep -E '^path\s*=\s*"([^"]*)"' Cargo.toml |
     sed -E 's/.*"([^"]*)".*/\1/' |
