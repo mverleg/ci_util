@@ -10,7 +10,7 @@ then
     exit 1
 fi
 
-grep -E '^path\s*=\s*"([^"]*)"' Cargo.toml |
+grep -E '^(build|path)\s*=\s*"([^"]*)"' Cargo.toml |
     sed -E 's/.*"([^"]*)".*/\1/' |
     xargs -I'$' sh -xc '
         mkdir -p "$(dirname $)";
