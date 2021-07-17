@@ -8,6 +8,7 @@ FROM ubuntu:focal
 
 # install poython3 and utils
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     python3 python3-pip \
     fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 \
