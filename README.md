@@ -14,3 +14,10 @@ Can pre-build dependencies in a separate Docker layer for performance::
 
 You have to be careful to pass the same cargo flags in subsequent builds.
 
+## Selenium driver
+
+Docker: https://hub.docker.com/repository/docker/mverleg/selenium_driver
+
+Derived from https://github.com/dimmg/dockselpy (but with several features stripped).
+
+This image allows running Selenium tests against Firefox or Chrome.

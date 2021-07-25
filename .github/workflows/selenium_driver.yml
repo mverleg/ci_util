@@ -28,7 +28,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: ./docker/rust_nightly_musl_base.Dockerfile
+          file: ./docker/selenium_drivers.Dockerfile
           context: .
           push: true
           tags: mverleg/selenium_driver:latest,mverleg/selenium_driver:${{ steps.date.outputs.date }}_${{ github.run_number }}
