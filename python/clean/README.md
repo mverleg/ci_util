@@ -9,5 +9,6 @@ Uses:
 
 * `black` for formatting
 * `isort` for organizing dependencies
-* `flake8` to find potential problems (which you will usually have to resolve yourself)
+* `autopep8` to fix some pep8 issues
+* `flake8` to find (but no fix) potential problems
 

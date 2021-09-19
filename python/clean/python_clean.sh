@@ -22,8 +22,11 @@ black .
 printf '\n\033[0;35mSTEP 2: isort import sorting\033[0m\n\n'
 isort .
 
-printf '\n\033[0;35mSTEP 3: flake8 linting\033[0m\n\n'
-flake8 --max-line-length 119 .
+printf '\n\033[0;35mSTEP 3: autopep8 fix some lint issues\033[0m\n\n'
+autopep8 --in-place --aggressive --max-line-length 120 --recursive .
+
+printf '\n\033[0;35mSTEP 4: flake8 linting\033[0m\n\n'
+flake8 --max-line-length 120 .
 
 if [ -d .git ] && [ -n "$(git status --porcelain)" ]; then
     printf '\n\033[0;35mall done\033[0m, do not forget to commit\n'
