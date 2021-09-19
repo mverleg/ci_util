@@ -21,3 +21,8 @@ Docker: https://hub.docker.com/repository/docker/mverleg/selenium_driver
 Derived from https://github.com/dimmg/dockselpy (but with several features stripped).
 
 This image allows running Selenium tests against Firefox or Chrome.
+
+## Python clean
+
+Format and lint Python code, see [README](python/clean/README.md).
+

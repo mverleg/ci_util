@@ -3,7 +3,7 @@
 
 Format and lint Python code without installing packages, by simply running this Docker image:
 
-    docker run --rm -v "$(pwd):/code" -it mverleg/python_clean 
+    docker run --rm -v "$(pwd):/code" -it mverleg/python_clean
 
 Uses:
 
