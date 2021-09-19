@@ -38,7 +38,11 @@ if [ "$status" -eq "0" ]; then
             printf '\n\033[0;35mcommitting\033[0m\n'
             git add :/ --all
             git commit -m 'Automatic reformatting & linting\n\nExecuted black, isort, autopep8 and flake8 using mverleg/python_clean docker image'
-            printf '\n\033[0;35mall done\033[0m, check the commit\n'
+            if [ ! -f .git-blame-ignore-revs ]; then
+                printf '# USE: git blame --ignore-revs-file .git-blame-ignore-revs\nOR: git config blame.ignoreRevsFile .git-blame-ignore-revs\n\n' >> .git-blame-ignore-revs
+            fi
+            printf '# %s:\n%s\n' "$(git rev-parse --verify HEAD)" "$(git rev-parse --short HEAD)" >> .git-blame-ignore-revs
+            printf '\n\033[0;35mall done\033[0m, check the commit (update .git-blame-ignore-revs when making changes)\n'
         else
             printf '\n\033[0;35mall done\033[0m, no changes\n'
         fi
