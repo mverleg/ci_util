@@ -7,6 +7,7 @@ Format and lint Python code without installing packages, by simply running this 
 
 Uses:
 
+* `expand` to replace tabs by 4 spaces
 * `black` for formatting
 * `isort` for organizing dependencies
 * `autopep8` to fix some pep8 issues

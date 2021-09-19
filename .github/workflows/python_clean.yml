@@ -31,5 +31,5 @@ jobs:
           file: ./python/clean/Dockerfile
           context: .
           push: true
-          tags: mverleg/rust_nightly_musl_base:latest,mverleg/rust_nightly_musl_base:${{ steps.date.outputs.date }}_${{ github.run_number }}
+          tags: mverleg/python_clean:latest,mverleg/python_clean:${{ steps.date.outputs.date }}_${{ github.run_number }}
 
