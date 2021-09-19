@@ -16,17 +16,18 @@ else
    printf 'git not detected; not checking for pending changes\n' 1>&2
 fi
 
-printf 'STEP 1: black formatting\n'
+printf '\n\033[0;35mSTEP 1: black formatting\033[0m\n\n'
 black .
 
-printf 'STEP 2: isort import sorting\n'
+printf '\n\033[0;35mSTEP 2: isort import sorting\033[0m\n\n'
 isort .
 
-printf 'STEP 3: flake8 linting'
+printf '\n\033[0;35mSTEP 3: flake8 linting\033[0m\n\n'
 flake8 .
 
 if [ -d .git ] && [ -n "$(git status --porcelain)" ]; then
-    printf 'all done, do not forget to commit\n'
+    printf '\n\033[0;35mall done\033[0m, do not forget to commit\n'
 else
-    printf 'all done\n'
+    printf '\n\033[0;35mall done\033[0m\n'
 fi
+
