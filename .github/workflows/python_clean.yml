@@ -29,7 +29,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: ./python/clean/Dockerfile
-          context: .
+          context: ./python/clean
           push: true
           tags: mverleg/python_clean:latest,mverleg/python_clean:${{ steps.date.outputs.date }}_${{ github.run_number }}
 
