@@ -14,7 +14,7 @@ grep -E '^(build|path)\s*=\s*"([^"]*)"' Cargo.toml |
     sed -E 's/.*"([^"]*)".*/\1/' |
     xargs -I'$' sh -xc '
         mkdir -p "$(dirname $)";
-        printf "\n// generated file to build dependencies\n#[allow(unused)]\nfn main() {\n\tprintln!("cargo:rerun-if-changed=build.rs");\n}\n" > "$";
+        printf "\n// generated file to build dependencies\n#[allow(unused)]\nfn main() {\n\tprintln!(\"cargo:rerun-if-changed=build.rs\");\n}\n" > "$";
         touch -t "200001010100" "$";'
 
 cargo build --workspace "$@"
