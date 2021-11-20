@@ -15,5 +15,11 @@ RUN cargo install semverver
 #TODO @mark: remove --version once 0.10+ works on musl
 RUN cargo install wasm-pack --version 0.9.1 --no-default-features
 
+COPY ./util/Cargo_dependencies.toml Cargo.toml
+
+RUN cargo build
+
+RUN rm Cargo.toml
+
 COPY ./util/build_dependencies_only.sh ./build_dependencies_only.sh
 
