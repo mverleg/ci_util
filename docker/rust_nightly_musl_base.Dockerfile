@@ -10,6 +10,7 @@ RUN cargo install cargo-audit
 RUN cargo install cargo-deny
 RUN cargo install cargo-tree
 RUN cargo install cargo-edit
+RUN cargo install semverver
 #TODO @mark: remove --version once 0.10+ works on musl
 RUN cargo install wasm-pack --version 0.9.1 --no-default-features
 
