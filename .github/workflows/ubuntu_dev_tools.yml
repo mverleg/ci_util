@@ -3,7 +3,7 @@ name: 'Ubuntu dev tools'
 
 on:
   schedule:
-    - cron: '0 4 2 * *'
+    - cron: '0 23 1 1,4,7,10 *'
   workflow_dispatch:
 
 jobs:

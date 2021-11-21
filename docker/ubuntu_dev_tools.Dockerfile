@@ -29,16 +29,25 @@ RUN apt-get install --allow-unauthenticated -y gcc
 RUN apt-get install --allow-unauthenticated -y default-jre
 RUN apt-get install --allow-unauthenticated -y default-jdk
 RUN apt-get install --allow-unauthenticated -y gradle
+
 RUN pip3 install numpy
 RUN pip3 install scipy
 RUN pip3 install matplotlib
 RUN pip3 install seaborn
 RUN pip3 install scikit-learn
-RUN curl https://sh.rustup.rs -sSf > /tmp/rust_install.sh && \
-    bash /tmp/rust_install.sh --no-modify-path -y &&\
-    rustup toolchain install nightly &&\
-    rustup default nightly &&\
-    sudo chown $USER:$USER -R "/home/$USER/.cache"
+
+RUN curl https://sh.rustup.rs -sSf > /tmp/rust_install.sh
+RUN bash /tmp/rust_install.sh --no-modify-path -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+RUN rustup toolchain install nightly
+RUN rustup default nightly
+RUN chown $USER:$USER -R "/$HOME/.cache"
+
+#RUN printf 'devtools' > /etc/hostname &&\
+#    printf '127.0.0.1    devtools' > /etc/hosts
+
+RUN mkdir /cache &&\
+    printf 'HISTFILE="/cache/.bash_history"' >> /root/.bashrc
 
 WORKDIR /app
 
