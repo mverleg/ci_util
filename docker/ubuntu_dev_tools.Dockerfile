@@ -17,7 +17,6 @@ RUN apt-get install --allow-unauthenticated -y tree
 RUN apt-get install --allow-unauthenticated -y git
 RUN apt-get install --allow-unauthenticated -y vim
 RUN apt-get install --allow-unauthenticated -y rsync
-RUN apt-get install --allow-unauthenticated -y curl
 RUN apt-get install --allow-unauthenticated -y sqlite3
 RUN apt-get install --allow-unauthenticated -y libsqlite3-dev
 RUN apt-get install --allow-unauthenticated -y moreutils
