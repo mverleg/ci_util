@@ -3,13 +3,42 @@ FROM ubuntu:20.04
 
 # todo maybe get rid of --allow-insecure-repositories somehow
 RUN apt-get update --allow-insecure-repositories && apt-get dist-upgrade --allow-unauthenticated -y
-RUN apt-get install --allow-unauthenticated -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common linux-tools-common linux-tools-generic build-essential libssl-dev libffi-dev tree
-RUN apt-get install --allow-unauthenticated -y git vim rsync curl sqlite3 libsqlite3-dev moreutils jq ripgrep
-RUN apt-get install --allow-unauthenticated -y python3-dev python3-pip gcc default-jre default-jdk gradle
-RUN pip3 install numpy scipy matplotlib seaborn scikit-learn
+RUN apt-get install --allow-unauthenticated -y apt-transport-https
+RUN apt-get install --allow-unauthenticated -y ca-certificates
+RUN apt-get install --allow-unauthenticated -y curl
+RUN apt-get install --allow-unauthenticated -y gnupg-agent
+RUN apt-get install --allow-unauthenticated -y software-properties-common
+RUN apt-get install --allow-unauthenticated -y linux-tools-common
+RUN apt-get install --allow-unauthenticated -y linux-tools-generic
+RUN apt-get install --allow-unauthenticated -y build-essential
+RUN apt-get install --allow-unauthenticated -y libssl-dev
+RUN apt-get install --allow-unauthenticated -y libffi-dev
+RUN apt-get install --allow-unauthenticated -y tree
+RUN apt-get install --allow-unauthenticated -y git
+RUN apt-get install --allow-unauthenticated -y vim
+RUN apt-get install --allow-unauthenticated -y rsync
+RUN apt-get install --allow-unauthenticated -y curl
+RUN apt-get install --allow-unauthenticated -y sqlite3
+RUN apt-get install --allow-unauthenticated -y libsqlite3-dev
+RUN apt-get install --allow-unauthenticated -y moreutils
+RUN apt-get install --allow-unauthenticated -y jq
+RUN apt-get install --allow-unauthenticated -y ripgrep
+RUN apt-get install --allow-unauthenticated -y python3-dev
+RUN apt-get install --allow-unauthenticated -y python3-pip
+RUN apt-get install --allow-unauthenticated -y gcc
+RUN apt-get install --allow-unauthenticated -y default-jre
+RUN apt-get install --allow-unauthenticated -y default-jdk
+RUN apt-get install --allow-unauthenticated -y gradle
+RUN pip3 install numpy
+RUN pip3 install scipy
+RUN pip3 install matplotlib
+RUN pip3 install seaborn
+RUN pip3 install scikit-learn
 RUN curl https://sh.rustup.rs -sSf > /tmp/rust_install.sh && \
     bash /tmp/rust_install.sh --no-modify-path -y &&\
     rustup toolchain install nightly &&\
     rustup default nightly &&\
     sudo chown $USER:$USER -R "/home/$USER/.cache"
+
+WORKDIR /app
 
