@@ -3,6 +3,9 @@ FROM clux/muslrust:nightly AS build
 
 ENV RUST_BACKTRACE=1
 
+RUN rustup component add rust-src
+RUN rustup component add rustc-dev
+RUN rustup component add llvm-tools-preview
 RUN rustup component add rustfmt
 RUN rustup component add clippy
 RUN cargo install cargo-outdated
