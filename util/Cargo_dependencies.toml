@@ -3,6 +3,10 @@ name = "ci_util"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "ci_util"
+path = "src/lib.rs"
+
 [dependencies]
 # Last updated 20 nov 2021 based on personal crates and crates.io recent download top 100
 aes = "*"
@@ -228,3 +232,6 @@ winapi = "*"
 ws = "*"
 yaml-rust = "*"
 zxcvbn = "*"
+
+[profile.dev.package."*"]
+opt-level = 3
