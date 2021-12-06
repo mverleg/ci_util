@@ -20,7 +20,7 @@ RUN cargo install wasm-pack --version 0.9.1 --no-default-features
 
 COPY ./util/Cargo_dependencies.toml Cargo.toml
 
-RUN mkdir src/ && src/lib.rs && cargo build
+RUN mkdir src/ && touch src/lib.rs && cargo build
 
 RUN rm Cargo.toml src/lib.rs
 
