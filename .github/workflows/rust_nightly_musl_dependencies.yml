@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: ./docker/rust_nightly_musl_dependencies.Dockerfile
-          build-args: BASE_VERSION=nodeps_${{ steps.date.outputs.date }}_${{ github.run_number }}
+          build-args: BASE_VERSION=nodeps_${{ steps.date.outputs.date }}
           context: .
           push: true
-          tags: mverleg/rust_nightly_musl_base:latest,mverleg/rust_nightly_musl_base:deps,mverleg/rust_nightly_musl_base:${{ steps.date.outputs.date }}_${{ github.run_number }},mverleg/rust_nightly_musl_base:deps_${{ steps.date.outputs.date }}_${{ github.run_number }}
+          tags: mverleg/rust_nightly_musl_base:latest,mverleg/rust_nightly_musl_base:deps,mverleg/rust_nightly_musl_base:${{ steps.date.outputs.date }}_${{ github.run_number }},mverleg/rust_nightly_musl_base:deps_${{ steps.date.outputs.date }},mverleg/rust_nightly_musl_base:deps_${{ steps.date.outputs.date }}_${{ github.run_number }}

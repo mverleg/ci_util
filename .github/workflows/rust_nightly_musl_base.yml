@@ -31,4 +31,4 @@ jobs:
           file: ./docker/rust_nightly_musl_base.Dockerfile
           context: .
           push: true
-          tags: mverleg/rust_nightly_musl_base:nodeps,mverleg/rust_nightly_musl_base:nodeps_${{ steps.date.outputs.date }}_${{ github.run_number }}
+          tags: mverleg/rust_nightly_musl_base:nodeps,mverleg/rust_nightly_musl_base:nodeps_${{ steps.date.outputs.date }},mverleg/rust_nightly_musl_base:nodeps_${{ steps.date.outputs.date }}_${{ github.run_number }}
