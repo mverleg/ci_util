@@ -25,11 +25,17 @@ jobs:
         with:
           username: mverleg
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-      - name: Build and push
+      - name: No dependencies - Build and push
         uses: docker/build-push-action@v2
         with:
           file: ./docker/rust_nightly_musl_base.Dockerfile
           context: .
           push: true
-          tags: mverleg/rust_nightly_musl_base:latest,mverleg/rust_nightly_musl_base:${{ steps.date.outputs.date }}_${{ github.run_number }}
-
+          tags: mverleg/rust_nightly_musl_base:nodeps,mverleg/rust_nightly_musl_base:nodeps_${{ steps.date.outputs.date }}_${{ github.run_number }}
+      - name: Dependencies - Build and push
+        uses: docker/build-push-action@v2
+        with:
+          file: ./docker/rust_nightly_musl_base.Dockerfile
+          context: .
+          push: true
+          tags: mverleg/rust_nightly_musl_base:latest,mverleg/rust_nightly_musl_base:deps,mverleg/rust_nightly_musl_base:${{ steps.date.outputs.date }}_${{ github.run_number }},mverleg/rust_nightly_musl_base:deps_${{ steps.date.outputs.date }}_${{ github.run_number }}

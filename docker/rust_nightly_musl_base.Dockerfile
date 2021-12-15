@@ -1,6 +1,6 @@
 
 FROM clux/muslrust:nightly AS build
-
+ARG WITH_DEPS=1
 ENV RUST_BACKTRACE=1
 
 RUN rustup component add rust-src
@@ -18,7 +18,11 @@ RUN rustup component add rustc-dev
 #TODO @mark: remove --version once 0.10+ works on musl
 RUN cargo install wasm-pack --version 0.9.1 --no-default-features
 
-COPY ./util/Cargo_dependencies.toml Cargo.toml
+COPY ./util/Cargo.toml Cargo.toml
+
+RUN mkdir src/ && touch src/lib.rs && cargo build
+
+RUN if [ "$WITH_DEPS" = "1" ]; then printf 'BUILDING WITH DEPENDENCIES'; cat ./util/dependencies.txt >> Cargo.toml; else printf 'BUILDING WITHOUT ANY DEPENDENCIES'; fi
 
 RUN mkdir src/ && touch src/lib.rs && cargo build
 
