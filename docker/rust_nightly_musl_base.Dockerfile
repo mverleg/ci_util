@@ -3,28 +3,15 @@ FROM clux/muslrust:nightly AS build
 ARG WITH_DEPS=1
 ENV RUST_BACKTRACE=1
 
-RUN rustup component add rust-src
-RUN rustup component add rustc-dev
-RUN rustup component add llvm-tools-preview
-RUN rustup component add rustfmt
-RUN rustup component add clippy
-RUN cargo install cargo-outdated
-RUN cargo install cargo-audit
-RUN cargo install cargo-deny
-RUN cargo install cargo-tree
-RUN cargo install cargo-edit
-RUN rustup component add rustc-dev
-#RUN cargo install semverver
-#TODO @mark: remove --version once 0.10+ works on musl
-RUN cargo install wasm-pack --version 0.9.1 --no-default-features
-
 COPY ./util/Cargo.toml Cargo.toml
 
 RUN mkdir src/ && touch src/lib.rs && cargo build
 
-RUN if [ "$WITH_DEPS" = "1" ]; then printf 'BUILDING WITH DEPENDENCIES'; cat ./util/dependencies.txt >> Cargo.toml; else printf 'BUILDING WITHOUT ANY DEPENDENCIES'; fi
+COPY ./util/dependencies.txt dependencies.txt
 
-RUN mkdir src/ && touch src/lib.rs && cargo build
+RUN if [ "$WITH_DEPS" = "1" ]; then printf 'BUILDING WITH DEPENDENCIES\n'; cat dependencies.txt >> Cargo.toml; else printf 'BUILDING WITHOUT ANY DEPENDENCIES\n'; fi
+
+RUN cargo build
 
 RUN rm Cargo.toml src/lib.rs
 
