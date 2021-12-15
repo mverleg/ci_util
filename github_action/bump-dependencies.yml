@@ -34,12 +34,13 @@ jobs:
       - name: Cargo bump
         if: hashFiles('Cargo.toml') != ''
         run: |
-          printf 'FROM mverleg/pastacode-base:latest\n' > "$TMPDIR/bump-dependencies.Dockerfile"
-          printf 'COPY . ./\n' >> "$TMPDIR/bump-dependencies.Dockerfile"
-          printf 'RUN cargo upgrade && cargo update\n' >> "$TMPDIR/bump-dependencies.Dockerfile"
-          printf 'RUN cargo --offline outdated --exit-code 1\n' >> "$TMPDIR/bump-dependencies.Dockerfile"
-          cat "$TMPDIR/bump-dependencies.Dockerfile"
-          docker build -t dependencies-image -f "$TMPDIR/bump-dependencies.Dockerfile" .
+          printf 'FROM mverleg/rust_nightly_musl_base:latest\n' > ./bump-dependencies.Dockerfile
+          printf 'COPY ./ ./\n' >> ./bump-dependencies.Dockerfile
+          printf 'RUN cargo upgrade && cargo update\n' >> ./bump-dependencies.Dockerfile
+          printf 'RUN cargo --offline outdated --exit-code 1\n' >> ./bump-dependencies.Dockerfile
+          cat ./bump-dependencies.Dockerfile
+          docker build -t dependencies-image -f ./bump-dependencies.Dockerfile .
+          rm ./bump-dependencies.Dockerfile
           id=$(docker create dependencies-image)
           docker cp $id:/volume/Cargo.toml Cargo.toml
           docker cp $id:/volume/Cargo.lock Cargo.lock
