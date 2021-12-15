@@ -3,6 +3,8 @@
 # is needed for the PR to trigger further Github Actions. To do that use an App:
 # https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#triggering-further-workflow-runs
 
+# This script is automatically updated from: https://github.com/mverleg/ci_util/tree/master/github_action
+
 name: 'Bump dependencies'
 
 on:
@@ -32,10 +34,12 @@ jobs:
       - name: Cargo bump
         if: hashFiles('Cargo.toml') != ''
         run: |
+          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/master/github_action/bump-dependencies.Dockerfile --output bump-dependencies.Dockerfile
           docker build -t dependencies-image -f ci/bump-dependencies.Dockerfile .
           id=$(docker create dependencies-image)
           docker cp $id:/volume/Cargo.toml Cargo.toml
           docker cp $id:/volume/Cargo.lock Cargo.lock
+          rm bump-dependencies.Dockerfile
       - name: Changes?
         id: is_changed
         run: |
