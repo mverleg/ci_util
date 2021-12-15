@@ -2,6 +2,13 @@
 # Note: while it is possible to create PR without special token, the special token
 # is needed for the PR to trigger further Github Actions. To do that use an App:
 # https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#triggering-further-workflow-runs
+# https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
+# * Create app if you do not have one
+# * In account settings > applications > repository access, add the repo
+# * (The app should now appear in repository > settings > integrations)
+# * From there app settings > general > private keys (bottom) > generate a private key. Also note the app id
+# * Repository > settings > secrets; add: PR_BOT_APP_ID, PR_BOT_PRIV_KEY with the id and content of private key file
+# * The `generate_token` step below should now work. Do not forget to shred private key file.
 
 # This script is automatically updated from: https://github.com/mverleg/ci_util/tree/master/github_action
 
@@ -11,6 +18,7 @@ on:
   schedule:
     - cron: '0 9 1,16 * *'
   workflow_dispatch:
+
 
 jobs:
   checks:
@@ -34,7 +42,7 @@ jobs:
       - name: Cargo bump
         if: hashFiles('Cargo.toml') != ''
         run: |
-          printf 'FROM mverleg/rust_nightly_musl_base:latest\n' > ./bump-dependencies.Dockerfile
+          printf 'FROM mverleg/rust_nightly_musl_base:nodeps\n' > ./bump-dependencies.Dockerfile
           printf 'COPY ./ ./\n' >> ./bump-dependencies.Dockerfile
           printf 'RUN cargo upgrade && cargo update\n' >> ./bump-dependencies.Dockerfile
           printf 'RUN cargo --offline outdated --exit-code 1\n' >> ./bump-dependencies.Dockerfile
