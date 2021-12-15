@@ -1,14 +1,15 @@
 
-name: 'Rust nightly musl base'
+name: 'Rust nightly musl with dependencies'
 
 on:
   schedule:
-    - cron: '0 4 1 * *'
+    # two hours after rust_nightly_musl_base
+    - cron: '0 6 1 * *'
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build base image
+    name: Build dependency image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,10 +26,11 @@ jobs:
         with:
           username: mverleg
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-      - name: Build and push
+      - name: Dependencies - Build and push
         uses: docker/build-push-action@v2
         with:
-          file: ./docker/rust_nightly_musl_base.Dockerfile
+          file: ./docker/rust_nightly_musl_dependencies.Dockerfile
+          build-args: BASE_VERSION=nodeps_${{ steps.date.outputs.date }}_${{ github.run_number }}
           context: .
           push: true
-          tags: mverleg/rust_nightly_musl_base:nodeps,mverleg/rust_nightly_musl_base:nodeps_${{ steps.date.outputs.date }}_${{ github.run_number }}
+          tags: mverleg/rust_nightly_musl_base:latest,mverleg/rust_nightly_musl_base:deps,mverleg/rust_nightly_musl_base:${{ steps.date.outputs.date }}_${{ github.run_number }},mverleg/rust_nightly_musl_base:deps_${{ steps.date.outputs.date }}_${{ github.run_number }}
