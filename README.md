@@ -14,6 +14,20 @@ Can pre-build dependencies in a separate Docker layer for performance::
 
 You have to be careful to pass the same cargo flags in subsequent builds.
 
+This image is meant to **build** a self-contained executable, not to execute it in production or be published. Instead use a multi-stage build to create a tiny image easily:
+
+```
+FROM mverleg/rust_nightly_musl_base:2021-10-17_11
+# build everything here
+RUN find . -wholename '*/release/*' -name 'exe-name-here' -type f -executable -print -exec cp {} /your_executable \;
+
+FROM scratch
+ENV PATH=/
+ENV RUST_BACKTRACE=1
+COPY --from=build /your_executable /your_executable
+ENTRYPOINT ["your_executable"]
+```
+
 ## Selenium driver
 
 Docker: https://hub.docker.com/repository/docker/mverleg/selenium_driver
