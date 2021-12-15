@@ -26,9 +26,11 @@ jobs:
         run: |
           curl --silent https://raw.githubusercontent.com/mverleg/ci_util/master/github_action/bump-dependencies.yml --output .github/workflows/bump-dependencies.yml
       - name: Docker bump
+        if: hashFiles('ci/upgrade_docker_base.sh') != ''
         run: |
           sh ci/upgrade_docker_base.sh
       - name: Cargo bump
+        if: hashFiles('Cargo.toml') != ''
         run: |
           docker build -t dependencies-image -f ci/bump-dependencies.Dockerfile .
           id=$(docker create dependencies-image)
