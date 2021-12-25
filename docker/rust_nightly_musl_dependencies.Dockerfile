@@ -6,6 +6,6 @@ COPY ./util/Cargo.toml Cargo.toml
 COPY ./util/dependencies.txt dependencies.txt
 RUN cat dependencies.txt >> Cargo.toml
 
-RUN mkdir src/ && touch src/lib.rs && cargo build
+RUN mkdir -p src/ && touch src/lib.rs && cargo build
 
 RUN rm Cargo.toml dependencies.txt src/lib.rs
