@@ -34,7 +34,7 @@ jobs:
           echo "::set-output name=DATE_NAME::$(date +'%B %Y')"
       - name: Self-update bumper action
         run: |
-          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/master/github_action/bump-dependencies.yml --output .github/workflows/bump-dependencies.yml
+          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/bump-dependencies.yml --output .github/workflows/bump-dependencies.yml
       - name: Docker bump
         if: hashFiles('ci/upgrade_docker_base.sh') != ''
         run: |
