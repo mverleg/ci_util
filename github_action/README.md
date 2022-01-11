@@ -12,5 +12,6 @@ These are reusable Github Actions that can be used in other projects, either man
 
   * Validate licenses
   * Check security warnings
+  * Reject duplicate deps with different versions
   * ...more to come
 
