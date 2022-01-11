@@ -38,7 +38,13 @@ jobs:
         run: |
           curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/bump-dependencies.yml --output - |\
               sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
-              .github/workflows/bump-dependencies2.yml
+              .github/workflows/bump-dependencies.yml
+          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/check-dependencies.yml --output - |\
+              sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
+              .github/workflows/check-dependencies.yml
+          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/check-dependencies.Dockerfile --output - |\
+              sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
+              .github/workflows/check-dependencies.Dockerfile
       - name: Docker bump
         if: hashFiles('ci/upgrade_docker_base.sh') != ''
         run: |
