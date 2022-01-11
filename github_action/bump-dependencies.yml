@@ -36,15 +36,17 @@ jobs:
           echo "::set-output name=DATE_NAME::$(date +'%B %Y')"
       - name: Self-update bumper action
         run: |
-          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/bump-dependencies.yml --output - |\
-              sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
-              .github/workflows/bump-dependencies.yml
-          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/check-dependencies.yml --output - |\
-              sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
-              .github/workflows/check-dependencies.yml
-          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/check-dependencies.Dockerfile --output - |\
-              sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
-              .github/workflows/check-dependencies.Dockerfile
+          function update() (
+              set -xeEuo pipefail
+              curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/$1 --output - |\
+                  sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
+                  .github/workflows/$1
+          )
+          mkdir -p ./.github/workflows ./ci
+          update 'bump-dependencies.yml' './.github/workflows/bump-dependencies.yml'
+          update 'bump-dependencies.Dockerfile' './ci/bump-dependencies.Dockerfile'
+          update 'check-dependencies.yml' './.github/workflows/check-dependencies.yml'
+          update 'check-dependencies.Dockerfile' './ci/check-dependencies.Dockerfile'
       - name: Docker bump
         if: hashFiles('ci/upgrade_docker_base.sh') != ''
         run: |
@@ -52,13 +54,8 @@ jobs:
       - name: Cargo bump
         if: hashFiles('Cargo.toml') != ''
         run: |
-          printf 'FROM mverleg/rust_nightly_musl_base:nodeps\n' > ./bump-dependencies.Dockerfile
-          printf 'COPY ./ ./\n' >> ./bump-dependencies.Dockerfile
-          printf 'RUN cargo upgrade && cargo update\n' >> ./bump-dependencies.Dockerfile
-          printf 'RUN cargo --offline outdated --exit-code 1\n' >> ./bump-dependencies.Dockerfile
-          cat ./bump-dependencies.Dockerfile
-          docker build -t dependencies-image -f ./bump-dependencies.Dockerfile .
-          rm ./bump-dependencies.Dockerfile
+          cat ./ci/bump-dependencies.Dockerfile
+          docker build -t dependencies-image -f ./ci/bump-dependencies.Dockerfile .
           id=$(docker create dependencies-image)
           docker cp $id:/volume/Cargo.toml Cargo.toml
           docker cp $id:/volume/Cargo.lock Cargo.lock
