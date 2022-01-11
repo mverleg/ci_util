@@ -38,6 +38,11 @@ jobs:
                   echo "::set-output name=IS_CHANGED::1"
               fi
           done
+
+      - name: Log
+        if: ${{ steps.is_changed.outputs.IS_CHANGED == '1' }}
+        run: |
+          cat ./ci/check-dependencies.Dockerfile
       - name: Run checks
         if: ${{ steps.is_changed.outputs.IS_CHANGED == '1' }}
         uses: docker/build-push-action@v2
