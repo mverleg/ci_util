@@ -1,6 +1,11 @@
 
+# Automatically update:
+# * Cargo dependency versions
+# * Docker base image versions
+# * CI scripts from https://github.com/mverleg/ci_util/tree/master/github_action
+
 # Note: while it is possible to create PR without special token, the special token
-# is needed for the PR to trigger further Github Actions. To do that use an App:
+# is needed for the PR to trigger further Github Actions (like creating PR). To do that use an App:
 # https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#triggering-further-workflow-runs
 # https://github.com/peter-evans/create-pull-request/blob/master/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
 # * Create app if you do not have one
@@ -10,15 +15,12 @@
 # * Repository > settings > secrets; add: PR_BOT_APP_ID, PR_BOT_PRIV_KEY with the id and content of private key file
 # * The `generate_token` step below should now work. Do not forget to shred private key file.
 
-# This script is automatically updated from: https://github.com/mverleg/ci_util/tree/master/github_action
-
 name: 'Bump dependencies'
 
 on:
   schedule:
     - cron: '0 9 1,16 * *'
   workflow_dispatch:
-
 
 jobs:
   checks:
@@ -34,7 +36,9 @@ jobs:
           echo "::set-output name=DATE_NAME::$(date +'%B %Y')"
       - name: Self-update bumper action
         run: |
-          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/bump-dependencies.yml --output .github/workflows/bump-dependencies.yml
+          curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/bump-dependencies.yml --output - |\
+              sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
+              .github/workflows/bump-dependencies2.yml
       - name: Docker bump
         if: hashFiles('ci/upgrade_docker_base.sh') != ''
         run: |
