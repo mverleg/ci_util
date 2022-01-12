@@ -43,10 +43,11 @@ jobs:
                   .github/workflows/$1
           )
           mkdir -p ./.github/workflows ./ci
-          update 'bump-dependencies.yml' './.github/workflows/bump-dependencies.yml'
-          update 'bump-dependencies.Dockerfile' './ci/bump-dependencies.Dockerfile'
-          update 'check-dependencies.yml' './.github/workflows/check-dependencies.yml'
-          update 'check-dependencies.Dockerfile' './ci/check-dependencies.Dockerfile'
+          update 'bump-dependencies.yml' './.github/workflows/bump-dependencies.yml' &
+          update 'bump-dependencies.Dockerfile' './ci/bump-dependencies.Dockerfile' &
+          update 'check-dependencies.yml' './.github/workflows/check-dependencies.yml' &
+          update 'check-dependencies.Dockerfile' './ci/check-dependencies.Dockerfile' &
+          wait
       - name: Docker bump
         #TODO @mark:
         if: hashFiles('ci/upgrade_docker_base.sh') != ''
