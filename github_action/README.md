@@ -2,6 +2,12 @@
 
 These are reusable Github Actions that can be used in other projects, either manually or automatically.
 
+* `test-lint.yml`
+
+  * Run all unit tests
+  * Clippy linting
+  * Rustfmt validation
+
 * `bump-dependencies.yml`
 
   * Updates Dockerfiles and Cargo dependencies.

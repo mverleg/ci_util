@@ -47,6 +47,8 @@ jobs:
           update 'bump-dependencies.Dockerfile' './ci/bump-dependencies.Dockerfile' &
           update 'check-dependencies.yml' './.github/workflows/check-dependencies.yml' &
           update 'check-dependencies.Dockerfile' './ci/check-dependencies.Dockerfile' &
+          update 'test-lint.yml' './.github/workflows/test-lint.yml' &
+          update 'test-lint.Dockerfile' './ci/test-lint.Dockerfile' &
           wait
       - name: Docker bump
         #TODO @mark:
