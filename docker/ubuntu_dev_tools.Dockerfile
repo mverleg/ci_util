@@ -49,6 +49,8 @@ RUN bash /tmp/rust_install.sh --no-modify-path -y
 ENV PATH="/home/dev/.cargo/bin:${PATH}"
 RUN rustup toolchain install nightly
 RUN rustup default nightly
+RUN rustup component add rustfmt
+RUN rustup component add clippy
 #RUN chown $USER:$USER -R "/$HOME/.cache"
 ENV CARGO_TARGET_DIR=/cache/rust_target
 
