@@ -38,9 +38,9 @@ jobs:
         run: |
           function update() (
               set -xeEuo pipefail
-              curl --silent https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/$1 --output - |\
+              curl --silent "https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/$1" --output - |\
                   sed "1s/^/\n# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten\!\n/" >\
-                  .github/workflows/$1
+                  "$2"
           )
           mkdir -p ./.github/workflows ./ci
           update 'bump-dependencies.yml' './.github/workflows/bump-dependencies.yml' &

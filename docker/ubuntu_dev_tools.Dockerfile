@@ -53,6 +53,8 @@ RUN rustup component add rustfmt
 RUN rustup component add clippy
 #RUN chown $USER:$USER -R "/$HOME/.cache"
 ENV CARGO_TARGET_DIR=/cache/rust_target
+ENV RUST_TEST_SHUFFLE=1
+ENV RUST_BACKTRACE=1
 
 RUN sudo mkdir /cache &&\
     sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc
