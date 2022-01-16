@@ -33,7 +33,7 @@ jobs:
         id: date
         run: |
           echo "::set-output name=DATE_CODE::$(date +'%Y-%m-%d')"
-          echo "::set-output name=DATE_NAME::$(date +'%B %Y')"
+          echo "::set-output name=DATE_NAME::$(date +'%Oe %B %Y')"
       - name: Self-update bumper action
         run: |
           function update() (
