@@ -1,6 +1,4 @@
 
-# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten!
-
 # Automatically update:
 # * Cargo dependency versions
 # * Docker base image versions
