@@ -7,7 +7,7 @@ COPY ./ ./
 # Build (for test)
 RUN find . -name target -prune -o -type f &&\
     touch -c build.rs src/main.rs src/lib.rs &&\
-    cargo build --all-features --tests
+    cargo build --all-features --tests --locked
 
 # Test
 RUN cargo --offline test --all-features

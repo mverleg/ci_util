@@ -1,4 +1,6 @@
 
+# GENERATED: This file is automatically updated by 'Bump dependencies', local changes will be overwritten!
+
 # Automatically update:
 # * Cargo dependency versions
 # * Docker base image versions
@@ -36,13 +38,15 @@ jobs:
           echo "::set-output name=DATE_NAME::$(date +'%Oe %B %Y')"
       - name: Ensure config file exists
         run: |
-          if [ ! -e ci-conf.json ]
-          then 
-              curl --silent 'https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/ci-conf-example.json' \
-                  --output './ci-conf.json'
-          fi
+          if [ ! -e ci-conf.json ]; then curl --silent 'https://raw.githubusercontent.com/mverleg/ci_util/main/github_action/ci-conf-example.json' --output './ci-conf.json'; fi
+      - name: Check conditions
+        id: conf
+        run: |
+          if [ $(jq .bump_dependencies.ci -r ci-conf.json) != false ]; then echo ::set-output name=ci::1; fi
+          if [ $(jq .bump_dependencies.dockerfile -r ci-conf.json) != false ]; then echo ::set-output name=dockerfile::1; fi
+          if [ $(jq .bump_dependencies.cargo -r ci-conf.json) != false ]; then echo ::set-output name=cargo::1; fi
       - name: Self-update bumper action
-        if: "$(jq  .bump_dependencies.ci -r ci-conf.json)" != false
+        if: steps.conf.outputs.ci == 1
         run: |
           function getconf() (
               set -eEuo pipefail
@@ -69,11 +73,11 @@ jobs:
           wait
       - name: Docker bump
         #TODO @mark:
-        if: hashFiles('ci/upgrade_docker_base.sh') != '' && "$(jq  .bump_dependencies.dockerfile -r ci-conf.json)" != false
+        if: hashFiles('ci/upgrade_docker_base.sh') != '' && steps.conf.outputs.dockerfile == 1
         run: |
           sh ci/upgrade_docker_base.sh
       - name: Cargo bump
-        if: hashFiles('Cargo.toml') != '' && "$(jq  .bump_dependencies.cargo -r ci-conf.json)" != false
+        if: hashFiles('Cargo.toml') != '' && steps.conf.outputs.cargo == 1
         run: |
           cat ./ci/bump-dependencies.Dockerfile
           docker build -t dependencies-image -f ./ci/bump-dependencies.Dockerfile .
