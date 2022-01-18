@@ -1,0 +1,12 @@
+{
+  "bump_dependencies": {},
+  "check_dependencies": {
+    "enabled": true
+  },
+  "test_lint": {
+    "enabled": true
+  },
+  "release": {
+    "artifact": {}
+  }
+}
