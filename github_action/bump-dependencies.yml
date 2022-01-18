@@ -35,6 +35,7 @@ jobs:
           echo "::set-output name=DATE_CODE::$(date +'%Y-%m-%d')"
           echo "::set-output name=DATE_NAME::$(date +'%Oe %B %Y')"
       - name: Self-update bumper action
+        if: "$(jq  .bump_dependencies.ci -r ci-conf.json)" != false
         run: |
           function getconf() (
               set -eEuo pipefail
@@ -62,11 +63,11 @@ jobs:
           wait
       - name: Docker bump
         #TODO @mark:
-        if: hashFiles('ci/upgrade_docker_base.sh') != ''
+        if: hashFiles('ci/upgrade_docker_base.sh') != '' && "$(jq  .bump_dependencies.dockerfile -r ci-conf.json)" != false
         run: |
           sh ci/upgrade_docker_base.sh
       - name: Cargo bump
-        if: hashFiles('Cargo.toml') != ''
+        if: hashFiles('Cargo.toml') != '' && "$(jq  .bump_dependencies.cargo -r ci-conf.json)" != false
         run: |
           cat ./ci/bump-dependencies.Dockerfile
           docker build -t dependencies-image -f ./ci/bump-dependencies.Dockerfile .

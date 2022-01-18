@@ -5,10 +5,8 @@
     "dockerfile": {}
   },
   "check_dependencies": {
-    "enabled": true
   },
   "test_lint": {
-    "enabled": true,
     "require_clippy": true,
     "require_fmt": true
   },

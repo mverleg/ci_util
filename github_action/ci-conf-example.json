@@ -1,11 +1,11 @@
 {
-  "bump_dependencies": {},
-  "check_dependencies": {
-    "enabled": true
+  "bump_dependencies": {
+    "ci": {},
+    "cargo": {},
+    "dockerfile": {}
   },
-  "test_lint": {
-    "enabled": true
-  },
+  "check_dependencies": {},
+  "test_lint": {},
   "release": {
     "artifact": {}
   }
