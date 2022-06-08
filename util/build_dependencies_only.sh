@@ -2,7 +2,7 @@
 
 # $1: extra cargo flags
 
-set -eEu
+set -eEux
 
 if [ ! -f Cargo.toml ]
 then
