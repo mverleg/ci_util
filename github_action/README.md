@@ -21,3 +21,11 @@ These are reusable Github Actions that can be used in other projects, either man
   * Reject duplicate deps with different versions
   * ...more to come
 
+* `release.yml` / `.Dockerfile`
+
+  * Build self-contained binaries (with hard-linked dependencies using musl)
+  * Create binary release files for a matrix of platforms, for any subset of the crate's binaries
+  * Increment version number for patch, minor or major release, and create release commit
+  * Create Github release
+  * Not yet: publish Dockerfile
+
