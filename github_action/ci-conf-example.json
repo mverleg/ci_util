@@ -2,11 +2,18 @@
   "bump_dependencies": {
     "ci": {},
     "cargo": {},
-    "dockerfile": {}
+    "dockerfile": false
   },
   "check_dependencies": {},
   "test_lint": {},
   "release": {
-    "artifact": {}
+    "artifact": {
+      "targets": [
+        { "target": "x86_64-unknown-linux-musl", "asset_postfix": "linux-x86-64" }
+      ],
+      "bins": [
+        "dockerfile_version_bumper"
+      ]
+    }
   }
 }
