@@ -27,5 +27,6 @@ These are reusable Github Actions that can be used in other projects, either man
   * Create binary release files for a matrix of platforms, for any subset of the crate's binaries
   * Increment version number for patch, minor or major release, and create release commit
   * Create Github release
+  * Update CLI help in README (todo: for multiple binaries)
   * Not yet: publish Dockerfile
 
