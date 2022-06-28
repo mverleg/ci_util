@@ -1,5 +1,5 @@
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # todo maybe get rid of --allow-insecure-repositories somehow
 RUN apt-get update --allow-insecure-repositories && apt-get dist-upgrade --allow-unauthenticated -y
@@ -29,6 +29,7 @@ RUN apt-get install --allow-unauthenticated -y default-jre
 RUN apt-get install --allow-unauthenticated -y default-jdk
 RUN apt-get install --allow-unauthenticated -y gradle
 RUN apt-get install --allow-unauthenticated -y sudo
+RUN apt-get install --allow-unauthenticated -y cmake
 
 RUN groupadd -r -g 1000 dev
 RUN useradd -r -u 1000 -g 1000 -m -d /home/dev -s /bin/bash dev
@@ -44,8 +45,9 @@ RUN pip3 install --user seaborn
 RUN pip3 install --user scikit-learn
 RUN sudo ln /usr/bin/python3 /usr/bin/python
 
-RUN curl https://sh.rustup.rs -sSf > /tmp/rust_install.sh
-RUN bash /tmp/rust_install.sh --no-modify-path -y
+RUN curl https://sh.rustup.rs -sSf > /tmp/rust_install.sh &&\
+    bash /tmp/rust_install.sh --no-modify-path -y &&\
+    rm /tmp/rust_install.sh
 ENV PATH="/home/dev/.cargo/bin:${PATH}"
 RUN rustup toolchain install nightly
 RUN rustup default nightly
@@ -56,8 +58,13 @@ ENV CARGO_TARGET_DIR=/cache/rust_target
 ENV RUST_TEST_SHUFFLE=1
 ENV RUST_BACKTRACE=1
 
+RUN clone https://github.com/mverleg/rusht rusht &&\
+    ( cd rusht && cargo install --all-features --bin --path . --target-dir /bin ) &&\
+    rm -rf rusht
+
 RUN sudo mkdir /cache &&\
-    sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc
+    sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc &&\
+    printf '"\e[A":     history-search-backward\n"\e[B":     history-search-forward\n"\eOA":     history-search-backward\n"\eOB":     history-search-forward\n' > /home/dev/.inputrc
 
 WORKDIR /app
 
