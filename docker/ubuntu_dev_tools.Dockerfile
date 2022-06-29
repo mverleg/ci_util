@@ -59,9 +59,7 @@ ENV RUST_TEST_SHUFFLE=1
 ENV RUST_BACKTRACE=1
 
 RUN sudo mkdir /cache
-RUN git clone https://github.com/mverleg/rusht /tmp/rusht &&\
-    ( cd /tmp/rusht && cargo install --all-features --bins --path . && tree )
-RUN rm -rf /tmp/rusht
+RUN cargo install --all-features --bins --git https://github.com/mverleg/rusht
 
 RUN sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc &&\
     printf '"\e[A":     history-search-backward\n"\e[B":     history-search-forward\n"\eOA":     history-search-backward\n"\eOB":     history-search-forward\n' > /home/dev/.inputrc
