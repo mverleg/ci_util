@@ -30,6 +30,7 @@ RUN apt-get install --allow-unauthenticated -y default-jdk
 RUN apt-get install --allow-unauthenticated -y gradle
 RUN apt-get install --allow-unauthenticated -y sudo
 RUN apt-get install --allow-unauthenticated -y cmake
+RUN apt-get install --allow-unauthenticated -y pkg-config
 
 RUN groupadd -r -g 1000 dev
 RUN useradd -r -u 1000 -g 1000 -m -d /home/dev -s /bin/bash dev
@@ -60,6 +61,7 @@ ENV RUST_TEST_SHUFFLE=1
 ENV RUST_BACKTRACE=1
 
 RUN cargo install --all-features --bins --git https://github.com/mverleg/rusht
+RUN cargo install --all-features --bins --git https://github.com/mverleg/dockerfile_version_bumper
 
 RUN sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc &&\
     printf '"\e[A":     history-search-backward\n"\e[B":     history-search-forward\n"\eOA":     history-search-backward\n"\eOB":     history-search-forward\n' > /home/dev/.inputrc
