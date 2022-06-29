@@ -10,7 +10,7 @@ RUN rustup component add clippy
 RUN cargo install cargo-outdated
 RUN cargo install cargo-audit
 RUN cargo install cargo-deny
-RUN cargo install cargo-tree
+#RUN cargo install cargo-tree
 RUN cargo install cargo-edit
 RUN rustup component add rustc-dev
 #RUN cargo install semverver

@@ -1,5 +1,5 @@
 
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 # todo maybe get rid of --allow-insecure-repositories somehow
 RUN apt-get update --allow-insecure-repositories && apt-get dist-upgrade --allow-unauthenticated -y
@@ -58,12 +58,12 @@ ENV CARGO_TARGET_DIR=/cache/rust_target
 ENV RUST_TEST_SHUFFLE=1
 ENV RUST_BACKTRACE=1
 
-RUN clone https://github.com/mverleg/rusht rusht &&\
-    ( cd rusht && cargo install --all-features --bin --path . --target-dir /bin ) &&\
-    rm -rf rusht
+RUN sudo mkdir /cache
+RUN git clone https://github.com/mverleg/rusht /tmp/rusht &&\
+    ( cd /tmp/rusht && cargo install --all-features --bins --path . && tree )
+RUN rm -rf /tmp/rusht
 
-RUN sudo mkdir /cache &&\
-    sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc &&\
+RUN sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc &&\
     printf '"\e[A":     history-search-backward\n"\e[B":     history-search-forward\n"\eOA":     history-search-backward\n"\eOB":     history-search-forward\n' > /home/dev/.inputrc
 
 WORKDIR /app
