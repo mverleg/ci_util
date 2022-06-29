@@ -34,6 +34,7 @@ RUN apt-get install --allow-unauthenticated -y cmake
 RUN groupadd -r -g 1000 dev
 RUN useradd -r -u 1000 -g 1000 -m -d /home/dev -s /bin/bash dev
 RUN printf 'dev ALL=(ALL) NOPASSWD:ALL\n' >> /etc/sudoers
+RUN mkdir -p /cache && chown dev:dev /cache
 
 #RUN chmod 777 -R /.cache/
 USER 1000
@@ -58,7 +59,6 @@ ENV CARGO_TARGET_DIR=/cache/rust_target
 ENV RUST_TEST_SHUFFLE=1
 ENV RUST_BACKTRACE=1
 
-RUN sudo mkdir /cache
 RUN cargo install --all-features --bins --git https://github.com/mverleg/rusht
 
 RUN sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc &&\
