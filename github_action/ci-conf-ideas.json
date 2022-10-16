@@ -7,8 +7,10 @@
   "check_dependencies": {
   },
   "test_lint": {
-    "require_clippy": true,
-    "require_fmt": true
+    "test": true,
+    "lint":  true,
+    "lint_strict":  false,
+    "fmt": true
   },
   "release": {
     "artifact": {},
