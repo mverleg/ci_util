@@ -9,9 +9,9 @@ ARG TEST=1
 RUN find . -name target -prune -o -type f &&\
     touch -c build.rs src/main.rs src/lib.rs &&\
     if [ "$TEST" != 0 ] ; then \
-        cargo build --all-features --tests --locked \
+        cargo build --all-features --tests --locked; \
     else \
-        cargo build --all-features --locked \
+        cargo build --all-features --locked; \
     fi
 
 # Test
