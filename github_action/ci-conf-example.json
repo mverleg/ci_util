@@ -5,7 +5,13 @@
     "dockerfile": false
   },
   "check_dependencies": {},
-  "test_lint": {},
+  "test_lint": {
+    "test": true,
+    "lint":  true,
+    "lint_strict":  false,
+    "fmt": false,
+    "examples": true
+  },
   "release": {
     "artifact": {
       "targets": [

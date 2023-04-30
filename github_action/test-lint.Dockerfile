@@ -1,5 +1,5 @@
 
-FROM mverleg/rust_nightly_musl_base:deps_2022-10-01_35
+FROM mverleg/rust_nightly_musl_base:deps_2023-04-30_37
 
 # Copy the code (all except .dockerignore).
 COPY ./ ./
@@ -21,6 +21,15 @@ RUN if [ "$TEST" != 0 ] ; then  \
     else  \
         echo SKIPPED;  \
     fi
+
+## Examples
+#ARG EXAMPLES=1
+#RUN echo "EXAMPLES=$EXAMPLES" &&\
+#    if [ "$EXAMPLES" != 0 ] ; then  \
+#        cargo --offline test --all-features;  \
+#    else  \
+#        echo SKIPPED;  \
+#    fi
 
 # Lint
 ARG LINT=1

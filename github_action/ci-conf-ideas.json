@@ -10,11 +10,12 @@
     "test": true,
     "lint":  true,
     "lint_strict":  false,
-    "fmt": true
+    "fmt": true,
+    "examples": true
   },
   "release": {
     "artifact": {},
     "docker": false,
     "crates_io": false
   }
-}
+}c
