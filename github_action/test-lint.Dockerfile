@@ -9,6 +9,7 @@ ARG TEST=1
 RUN echo "TEST=$TEST" &&\
     find . -name target -prune -o -type f &&\
     touch -c build.rs src/main.rs src/lib.rs &&\
+    # make sure Cargo.lock is added to git, or --locked will fail \
     if [ "$TEST" != 0 ] ; then \
         cargo build --all-features --tests --locked; \
     else \
