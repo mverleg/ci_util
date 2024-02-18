@@ -1,5 +1,6 @@
 
-FROM mverleg/rust_nightly_musl_base:deps_2023-04-30_37
+#TODO @mark: switch back to deps version
+FROM mverleg/rust_nightly_musl_base:nodeps_2024-02-17_42
 
 # Copy the code (all except .dockerignore).
 COPY ./ ./

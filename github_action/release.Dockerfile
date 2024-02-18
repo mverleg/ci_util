@@ -1,5 +1,5 @@
 
-FROM mverleg/rust_nightly_musl_base:deps_2023-04-30_37 AS build
+FROM mverleg/rust_nightly_musl_base:nodeps_2024-02-17_42 AS build
 
 ARG BIN
 ARG TARGET=x86_64-unknown-linux-musl
