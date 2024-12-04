@@ -1,5 +1,5 @@
 
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 # todo maybe get rid of --allow-insecure-repositories somehow
 RUN apt-get update --allow-insecure-repositories && apt-get dist-upgrade --allow-unauthenticated -y
