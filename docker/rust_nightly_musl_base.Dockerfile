@@ -25,7 +25,7 @@ RUN rustup target add x86_64-pc-windows-gnu
 RUN rustup target add x86_64-pc-windows-msvc
 RUN rustup target add x86_64-unknown-linux-gnu
 RUN rustup target add wasm32-unknown-unknown
-RUN rustup target add wasm32-wasi
+#RUN rustup target add wasm32-wasi
 RUN cargo install wasm-pack --version 0.9.1 --no-default-features
 
 COPY ./util/Cargo.toml Cargo.toml
