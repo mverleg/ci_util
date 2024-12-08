@@ -56,8 +56,7 @@ RUN curl https://sh.rustup.rs -sSf > /tmp/rust_install.sh &&\
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup toolchain install nightly
 RUN rustup default nightly
-RUN rustup component add rustfmt
-RUN rustup component add clippy
+RUN rustup component add rustfmt clippy
 #RUN chown $USER:$USER -R "/$HOME/.cache"
 ENV CARGO_TARGET_DIR=/cache/rust_target
 ENV RUST_TEST_SHUFFLE=1
@@ -66,8 +65,8 @@ ENV RUST_BACKTRACE=1
 RUN cargo install --all-features --bins --git https://github.com/mverleg/rusht
 RUN cargo install --all-features --bins --git https://github.com/mverleg/dockerfile_version_bumper
 
-RUN sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /home/dev/.bashrc &&\
-    printf '"\e[A":     history-search-backward\n"\e[B":     history-search-forward\n"\eOA":     history-search-backward\n"\eOB":     history-search-forward\n' > /home/dev/.inputrc
+RUN sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /root/.bashrc &&\
+    printf '"\e[A":     history-search-backward\n"\e[B":     history-search-forward\n"\eOA":     history-search-backward\n"\eOB":     history-search-forward\n' > /root/.inputrc
 
 WORKDIR /app
 
