@@ -1,4 +1,6 @@
 
+FROM mverleg/scripts_n_utils:latest AS scripts
+
 FROM ubuntu:24.04
 
 # todo maybe get rid of --allow-insecure-repositories somehow
@@ -62,8 +64,21 @@ ENV CARGO_TARGET_DIR=/cache/rust_target
 ENV RUST_TEST_SHUFFLE=1
 ENV RUST_BACKTRACE=1
 
+RUN cargo install \
+        rust-script \
+        sd \
+        ripgrep \
+        fd-find
 RUN cargo install --all-features --bins --git https://github.com/mverleg/rusht
 RUN cargo install --all-features --bins --git https://github.com/mverleg/dockerfile_version_bumper
+
+# own shell scripts through other util docker image
+COPY --from=scripts /usr/local/cargo/bin/ /root/.cargo/bin
+ENV PATH="/scripts:${PATH}"
+
+RUN #curl -f -o "/tmp/scripts.zip" "https://github.com/mverleg/scripts/releases/latest/download/scripts.zip" &&\
+#        unzip "/tmp/scripts.zip" -d "/scripts" &&\
+#        rm -f "/tmp/scripts.zip"
 
 RUN sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /root/.bashrc &&\
     printf '"\e[A":     history-search-backward\n"\e[B":     history-search-forward\n"\eOA":     history-search-backward\n"\eOB":     history-search-forward\n' > /root/.inputrc
