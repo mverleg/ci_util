@@ -53,7 +53,7 @@ RUN apt-get install --allow-unauthenticated -y \
 RUN sudo ln /usr/bin/python3 /usr/bin/python
 
 RUN curl https://sh.rustup.rs -sSf > /tmp/rust_install.sh &&\
-    bash /tmp/rust_install.sh --no-modify-path -y &&\
+    bash /tmp/rust_install.sh --profile default --no-modify-path -y &&\
     rm /tmp/rust_install.sh
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup toolchain install nightly
