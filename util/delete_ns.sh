@@ -1,7 +1,8 @@
 #!/usr/bin/env -S bash -eEu -o pipefail
 
 if [ $# -ne 2 ]; then
-    panic-in "$0" 'expects 2 args: namespace to delete, and name of cronjob that spawned this'
+    echo "$0: expects 2 args: namespace to delete, and name of cronjob that spawned this" 1>&2
+    exit 1
 fi
 
 ns="$1"
