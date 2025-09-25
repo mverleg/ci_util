@@ -24,7 +24,6 @@ RUN apt-get install --allow-unauthenticated -y \
         libsqlite3-dev\
         moreutils\
         jq\
-        ripgrep\
         python3-dev\
         python3-pip\
         gcc\
@@ -33,7 +32,8 @@ RUN apt-get install --allow-unauthenticated -y \
         gradle\
         sudo\
         cmake\
-        pkg-config
+        pkg-config \
+        nodejs npm
 
 #RUN groupadd -r -g 1000 dev\
 #        useradd -r -u 1000 -g 1000 -m -d /home/dev -s /bin/bash dev\
@@ -75,12 +75,15 @@ RUN cargo install --all-features --bins --git https://github.com/mverleg/dockerf
 COPY --from=scripts /usr/local/cargo/bin/ /root/.cargo/bin
 ENV PATH="/scripts:${PATH}"
 
-RUN #curl -f -o "/tmp/scripts.zip" "https://github.com/mverleg/scripts/releases/latest/download/scripts.zip" &&\
+#RUN curl -f -o "/tmp/scripts.zip" "https://github.com/mverleg/scripts/releases/latest/download/scripts.zip" &&\
 #        unzip "/tmp/scripts.zip" -d "/scripts" &&\
 #        rm -f "/tmp/scripts.zip"
 
 RUN sudo printf 'HISTFILE="/cache/.bash_history"\n' >> /root/.bashrc &&\
     printf '"\e[A":     history-search-backward\n"\e[B":     history-search-forward\n"\eOA":     history-search-backward\n"\eOB":     history-search-forward\n' > /root/.inputrc
+
+RUN npm install -g @anthropic-ai/claude-code &&\
+    claude --version
 
 WORKDIR /app
 

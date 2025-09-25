@@ -40,3 +40,10 @@ This image allows running Selenium tests against Firefox or Chrome.
 
 Format and lint Python code, see [README](python/clean/README.md).
 
+
+## Dev tools
+
+```shell
+docker run --rm -it -h devtools -v"$(pwd):/app" -v"$HOME/.cache/devtools:/cache" -v"$HOME/.claude:/home/ubuntu/.claude" mverleg/ubuntu_dev_tools
+```
+
