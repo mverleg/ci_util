@@ -14,6 +14,7 @@ RUN apt-get install --allow-unauthenticated -y \
         linux-tools-common\
         linux-tools-generic\
         build-essential\
+        openssl-dev\
         libssl-dev\
         libffi-dev\
         tree\
@@ -32,7 +33,7 @@ RUN apt-get install --allow-unauthenticated -y \
         gradle\
         sudo\
         cmake\
-        pkg-config \
+        pkg-config\
         nodejs npm
 
 #RUN groupadd -r -g 1000 dev\
@@ -72,8 +73,8 @@ RUN cargo install --all-features --bins --git https://github.com/mverleg/rusht
 RUN cargo install --all-features --bins --git https://github.com/mverleg/dockerfile_version_bumper
 
 # own shell scripts through other util docker image
-COPY --from=scripts /usr/local/cargo/bin/ /root/.cargo/bin
-ENV PATH="/scripts:${PATH}"
+#COPY --from=scripts /usr/local/cargo/bin/ /root/.cargo/bin
+#ENV PATH="/scripts:${PATH}"
 
 #RUN curl -f -o "/tmp/scripts.zip" "https://github.com/mverleg/scripts/releases/latest/download/scripts.zip" &&\
 #        unzip "/tmp/scripts.zip" -d "/scripts" &&\
