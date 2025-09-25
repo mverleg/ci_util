@@ -14,7 +14,7 @@ RUN apt-get install --allow-unauthenticated -y \
         linux-tools-common\
         linux-tools-generic\
         build-essential\
-        openssl-dev\
+        openssl\
         libssl-dev\
         libffi-dev\
         tree\
